@@ -1,0 +1,143 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# 同一个 PR 连续推多次时，取消排队中的旧运行——4 个人同时提 PR 时不会互相堵住
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 流程自查：main 上的提交必须来自 PR ─────────────────────────────────────
+  # 背景：私有仓库 + 个人账号下 rulesets / 分支保护不生效（要 GitHub Team），
+  # 所以「不许直推 main」这条用「本地 pre-push 钩子 + 这里标红」代替拦人。
+  # 标红不是拦截：推到 main 之后工作流会失败，至少不会悄无声息。
+  process-guard:
+    name: 流程自查（main 只接受 PR）
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: 这个提交来自 PR 吗
+        env:
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          TOKEN: ${{ github.token }}
+        run: |
+          resp=$(curl -sS -w '\n%{http_code}' \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/commits/$SHA/pulls")
+          code=$(printf '%s' "$resp" | tail -n 1)
+          body=$(printf '%s' "$resp" | sed '$d')
+          # 接口抖动/权限问题不误报（只提示），只有"确实查到了、且没有 PR"才红
+          if [ "$code" != "200" ]; then
+            echo "::warning::GitHub API 返回 $code，跳过本次自查"
+            exit 0
+          fi
+          count=$(printf '%s' "$body" | grep -o '"number":' | wc -l | tr -d ' ')
+          echo "关联的 PR 数：$count"
+          if [ "$count" = "0" ]; then
+            echo "::error::这次提交不在任何 PR 里 —— 看起来是直接推了 main。改成「开分支 → PR → 合并」（见 CONTRIBUTING）"
+            exit 1
+          fi
+          echo "✅ 来自 PR，流程合规"
+
+  # ── 静态检查：与 build / ui 并行跑，把 4 个人的等待时间压到最短 ──────────────
+  static:
+    name: 静态检查（类型 · 单测 · lint · 格式 · 路由 · 文件规模 · 设计 token）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      # store / repository 单测：拆 slice、改 action、动持久化时最先发现回归的一层
+      - run: pnpm test
+      - run: pnpm lint
+      - run: pnpm format:check
+      # 路由可达性：PageName 里有、但没有任何 navigate() 指过去的页面 = 用户永远打不开的僵尸路由
+      - run: pnpm routes
+      # 文件规模：防止再长出一个 4000 行的巨型文件（4 人并行时最大的冲突源）
+      - run: pnpm filesize
+      # 工作流上下文：job/step 级 if 里用错上下文会让整个 workflow 变成 "Invalid workflow file"（静默失效）
+      - run: pnpm workflows
+      # 设计 token：内联颜色存量冻结、只许变小（新文件必须从 :root 的 token 取色）
+      - run: pnpm tokens
+      # 依赖漏洞：生产依赖有高危就红（用户真的会跑到）；开发工具链的存量只报告
+      # （npmmirror 没有 audit 端点，所以显式指定官方 registry）
+      - name: 生产依赖漏洞（阻断）
+        run: pnpm audit --prod --audit-level=high --registry=https://registry.npmjs.org
+      - name: 全部依赖漏洞（仅报告）
+        run: pnpm audit --audit-level=high --registry=https://registry.npmjs.org || true
+
+  build:
+    name: 构建 · 包体预算 · 死代码报告
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      # 首屏包体预算：防止有人把重页面改回静态 import，把入口包从 75KB 撑回 450KB
+      - run: pnpm budget
+
+      # 死代码/未用依赖：先只报告，不阻断（存量问题见 PR 描述）
+      - name: 死代码扫描（不阻断）
+        run: pnpm deadcode || true
+
+      - name: 构建产物体积
+        run: |
+          du -sh dist
+          ls -lh dist/assets/*.js | sort -k5 -rh | head -6
+
+  ui:
+    name: UI 验收（冒烟 + 布局断言 + E2E）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm add -D playwright
+      - run: npx playwright install --with-deps chromium
+      - run: pnpm build
+      - name: 起预览服务
+        run: |
+          pnpm preview --port 4173 &
+          sleep 4
+
+      - name: 冒烟（9 个页面内容）
+        run: SMOKE_BASE=http://localhost:4173/ node scripts/smoke.mjs
+
+      - name: 布局断言（横向溢出 / 侧栏 / 内容起点）
+        run: SMOKE_BASE=http://localhost:4173/ node scripts/layout.mjs
+
+      - name: E2E 交互（消息 / 通知 / 发布 / 教师 / AI / 首页）
+        run: SMOKE_BASE=http://localhost:4173/ node scripts/e2e.mjs
+
+      # 视觉/结构基线：抓「谁把别人的颜色/间距/元素改掉了」——前两道门禁抓不到这类回归
+      - name: 视觉基线（结构 + 关键样式）
+        run: SMOKE_BASE=http://localhost:4173/ node scripts/visual.mjs

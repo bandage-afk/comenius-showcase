@@ -1,0 +1,10 @@
+# 纯机械改动（格式化等），git blame 直接跳过这些提交，避免"每行都是格式化那次提交"。
+#
+# 用法：
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs      # 本地生效（一次性）
+#   GitHub 网页的 blame 视图会自动读取本文件
+#
+# 新增格式化/批量替换类提交时，把它的完整 hash 追加到文件末尾。
+
+# style: 全仓统一 Prettier 格式（121 个文件，无逻辑改动）
+a45f173d80eb35715145b8c26122f79733a57f9e

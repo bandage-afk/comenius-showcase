@@ -1,0 +1,50 @@
+node_modules/
+dist/
+build/
+.cache/
+.env*
+.vite/
+vite.config.*.timestamp-*
+*.tsbuildinfo
+*-debug.log*
+logs/
+*.log
+.claude-replay.*
+.tmp-*
+
+# macOS / 压缩包 / 编辑器
+.DS_Store
+**/.DS_Store
+__MACOSX/
+._*
+*.tar.gz
+*.zip
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# husky 安装时生成，不入库
+.husky/_/
+
+# 视觉基线的截图留档（指纹 baseline.json 要入库，截图不入库）
+scripts/visual/shots/
+
+# ── 用户上传的图片（抽屉2）──────────────────────────────────────────────
+# 用户上传的图是【数据】，不是【代码】，绝不能进 git：
+#   1) 每个用户的图都进仓库 → 仓库无限膨胀（1 万张 × 200KB = 2GB）
+#   2) 进 git 的图会随代码一起被新版本覆盖 → 用户的图被冲掉
+#   3) 部署时 release 只保留 5 份（deploy.sh KEEP=5）→ 老的图被整个删除
+# 所以整个 uploads/ 目录只保留"目录骨架"（.gitkeep），图片一律忽略。
+uploads/*
+!uploads/avatars/
+!uploads/posts/
+uploads/avatars/*
+uploads/posts/*
+!uploads/avatars/.gitkeep
+!uploads/posts/.gitkeep
+
+# 数据库文件（抽屉1）：用户数据，同样只保留目录骨架
+database/*.sqlite
+database/*.sqlite-*
+database/*.db
+backend/.data/

@@ -1,0 +1,134 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "off",
+    "style": "off"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-await-in-loop": "off",
+    "no-underscore-dangle": [
+      "warn",
+      {
+        "allow": [
+          "_plane",
+          "_hit",
+          "_hitLocal",
+          "_hitWorld",
+          "_normal",
+          "_normalMatrix",
+          "_origin",
+          "_local",
+          "_pos",
+          "_tgt",
+          "_quat",
+          "_identity",
+          "_anchor",
+          "_v",
+          "_resetZoomStateForTest",
+          "__community",
+          "__lfFrames"
+        ]
+      }
+    ],
+    "unicorn/no-array-sort": "error",
+    "unicorn/no-array-reverse": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/purity": "warn",
+    "react/static-components": "warn",
+    "react/set-state-in-effect": "warn",
+    "react/immutability": "warn",
+    "react/refs": "warn",
+    "unicorn/no-array-callback-reference": "off",
+    "unicorn/prefer-number-properties": "off"
+  },
+  "overrides": [
+    {
+      "files": ["src/**"],
+      "rules": {
+        "unicorn/no-array-sort": "off",
+        "unicorn/no-array-reverse": "off"
+      }
+    },
+    {
+      "files": ["src/forest/**", "src/lockerfolio/scene/**", "src/lockerfolio/components/work/**"],
+      "rules": {
+        "react/purity": "off",
+        "react/immutability": "off"
+      }
+    },
+    {
+      "files": ["scripts/lib/visual.mjs"],
+      "rules": {
+        "unicorn/consistent-function-scoping": "off"
+      }
+    },
+    {
+      "files": [
+        "src/pages/MessagesPage.tsx",
+        "src/pages/FeedPage.tsx",
+        "src/pages/AmosAIPage.tsx",
+        "src/lockerfolio/components/work/PostersThreeScene.tsx"
+      ],
+      "rules": {
+        "react/exhaustive-effect-dependencies": "off",
+        "react/set-state-in-effect": "off"
+      }
+    },
+    {
+      "files": ["src/pages/**", "src/components/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/community/data",
+                  "**/data/posts",
+                  "**/blogData",
+                  "**/podcastData",
+                  "**/notificationData"
+                ],
+                "allowTypeImports": true,
+                "message": "页面只认 store（ADR-0006）：业务数据从 useCommunity / useNotes / useProfile / useNotifications / useContent 拿，别直接 import mock 数据模块（类型 import 不受限）。"
+              },
+              {
+                "group": ["**/repositories", "**/repositories/**"],
+                "allowTypeImports": true,
+                "message": "repository 是 store 的内部实现（ADR-0006）：页面通过 store 读写，别直接 import src/repositories。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/stores/**", "src/*Store.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/community/data",
+                  "**/data/posts",
+                  "**/blogData",
+                  "**/podcastData",
+                  "**/notificationData"
+                ],
+                "allowTypeImports": true,
+                "message": "store 只通过 src/repositories/ 取数（ADR-0006）：直接 import mock 数据模块会让「换后端」又变成改 store。"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "ignorePatterns": ["dist/**", "node_modules/**", "coverage/**"]
+}

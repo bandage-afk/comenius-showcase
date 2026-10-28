@@ -1,0 +1,18 @@
+# 代码 owner —— 现在只起「路由 / 提醒」作用：PR 会圈出对应 owner，但**不强制**批准
+# （「必须 owner 批准」要 GitHub Team 的 rulesets 才生效，见 docs/REPO-SETUP.md §2）。
+#
+# ⚠️ 下面是占位：CONTRIBUTING 的「模块归属」表里 owner 还都是"待定"，
+#    定了名字之后把对应行换成具体的人或团队（@user / @org/team），并把 CONTRIBUTING 的表一起更新。
+
+# 兜底：谁都能被 @ 到，总比没有强
+*  @dongyuming0717-ctrl
+
+# 定好 owner 后，把下面几行取消注释并替换（模块划分与 CONTRIBUTING 一一对应）
+# /src/App.tsx /src/components/MainSidebar.tsx /src/stores/** /src/repositories/** /src/index.css /vite.config.ts  @架构owner
+# /src/pages/MessagesPage.tsx /src/pages/messages/** /src/pages/NotificationPage.tsx /src/community/**            @消息owner
+# /src/pages/FeedPage.tsx /src/pages/feed/** /src/pages/NoteDetailPage.tsx /src/pages/ProfilePage.tsx             @社区owner
+# /src/pages/UserProfilePage.tsx /src/pages/SearchPage.tsx /src/data/**                                           @社区owner
+# /src/tedclone/** /src/blogData.ts /src/podcastData.ts /src/pages/BlogPage.tsx /src/pages/PodcastPage.tsx        @课程owner
+# /src/teacher/** /src/pages/TeacherPage.tsx /src/profile/**                                                      @教师owner
+# /src/lockerfolio/** /public/models/** /public/assets/**                                                          @储物柜owner
+# /deploy.sh /.github/workflows/** /docs/** /scripts/**                                                            @部署owner

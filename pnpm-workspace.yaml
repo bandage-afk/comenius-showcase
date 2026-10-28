@@ -1,0 +1,5 @@
+packages: []
+
+# protobufjs 的构建脚本对本项目无用，显式忽略（不写 true/false 会让 pnpm install 直接失败）
+allowBuilds:
+  protobufjs: false

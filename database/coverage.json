@@ -1,0 +1,1296 @@
+{
+  "generatedAt": "2026-10-03T09:00:00.000Z",
+  "tables": {
+    "users": 62,
+    "profiles": 1,
+    "profile_experiences": 3,
+    "profile_education": 2,
+    "profile_skills": 10,
+    "profile_certifications": 3,
+    "profile_volunteer": 1,
+    "profile_languages": 3,
+    "profile_projects": 3,
+    "profile_stickers": 2,
+    "academic_grades": 1,
+    "academic_comps": 1,
+    "academic_activities": 1,
+    "posts": 200,
+    "comments": 2800,
+    "comment_replies": 1,
+    "post_likes": 5,
+    "post_collects": 5,
+    "user_follows": 5,
+    "user_notes": 5,
+    "content_drafts": 1,
+    "conversations": 11,
+    "conversation_members": 26,
+    "conversation_preferences": 11,
+    "messages": 18,
+    "announcements": 1,
+    "group_settings": 1,
+    "group_join_requests": 1,
+    "notifications": 16,
+    "notification_settings": 1,
+    "blog_categories": 13,
+    "blog_posts": 23,
+    "podcast_categories": 4,
+    "podcast_episodes": 12,
+    "teacher_profiles": 1,
+    "teacher_courses": 2,
+    "teacher_credentials": 2,
+    "teacher_evidence": 1,
+    "teacher_reviewlist": 1,
+    "teacher_education": 1,
+    "teacher_experience": 1,
+    "teacher_students": 4,
+    "teacher_lessons": 4,
+    "teacher_orders": 3,
+    "teacher_social_posts": 3,
+    "teacher_social_comments": 3,
+    "teacher_connections": 8,
+    "admin_roles": 3,
+    "admin_accounts": 3,
+    "admin_users": 12,
+    "teacher_applications": 4,
+    "post_approvals": 10,
+    "moderation_comments": 2,
+    "reports": 3,
+    "audit_logs": 2,
+    "admin_settings": 1,
+    "password_reset_requests": 2,
+    "ted_talks": 29,
+    "ted_featured_talks": 8,
+    "ted_trending_categories": 3,
+    "newsletters": 4,
+    "portfolio_nav": 4,
+    "portfolio_skills": 3,
+    "portfolio_folders": 4,
+    "portfolio_posters": 11,
+    "portfolio_photos": 16,
+    "portfolio_videos": 2,
+    "portfolio_websites": 3,
+    "portfolio_seed_notes": 3,
+    "portfolio_config": 6,
+    "asset_manifest": 33,
+    "static_assets": 141,
+    "ai_conversations": 1,
+    "ai_messages": 2,
+    "feature_flags": 2,
+    "search_history": 3,
+    "source_variables": 217,
+    "source_models": 79
+  },
+  "totalRows": 3903,
+  "checks": [
+    "row counts",
+    "foreign_key_check",
+    "integrity_check",
+    "repeat seed idempotence",
+    "source snapshot round-trip"
+  ],
+  "postgresExecuted": false,
+  "sourceSnapshots": 217,
+  "interfaceModels": 79,
+  "dynamicDeclarationsNotArchived": [
+    {
+      "source": "src/App.tsx",
+      "variable": "ADMIN_ROUTES",
+      "line": 72
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "date",
+      "line": 137
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "users",
+      "line": 164
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "applications",
+      "line": 176
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "posts",
+      "line": 189
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "reports",
+      "line": 201
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "log",
+      "line": 238
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "audit",
+      "line": 247
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "useAdminStore",
+      "line": 251
+    },
+    {
+      "source": "src/adminStore.ts",
+      "variable": "adminApi",
+      "line": 442
+    },
+    {
+      "source": "src/app/errorReporting.ts",
+      "variable": "ENDPOINT",
+      "line": 34
+    },
+    {
+      "source": "src/app/errorReporting.ts",
+      "variable": "toMessage",
+      "line": 38
+    },
+    {
+      "source": "src/app/errorReporting.ts",
+      "variable": "toStack",
+      "line": 48
+    },
+    {
+      "source": "src/app/flags.ts",
+      "variable": "flags",
+      "line": 69
+    },
+    {
+      "source": "src/app/routes.ts",
+      "variable": "ROUTES",
+      "line": 27
+    },
+    {
+      "source": "src/app/routes.ts",
+      "variable": "PAGE_KEYS",
+      "line": 58
+    },
+    {
+      "source": "src/community/data.ts",
+      "variable": "userCache",
+      "line": 272
+    },
+    {
+      "source": "src/community/data.ts",
+      "variable": "userId",
+      "line": 293
+    },
+    {
+      "source": "src/communityStore.ts",
+      "variable": "socialSlice",
+      "line": 38
+    },
+    {
+      "source": "src/communityStore.ts",
+      "variable": "useCommunity",
+      "line": 58
+    },
+    {
+      "source": "src/components/ui/Avatar.tsx",
+      "variable": "url",
+      "line": 1
+    },
+    {
+      "source": "src/contentStore.ts",
+      "variable": "useContent",
+      "line": 19
+    },
+    {
+      "source": "src/feed/ranking/filters.ts",
+      "variable": "removeSeen",
+      "line": 12
+    },
+    {
+      "source": "src/feed/ranking/filters.ts",
+      "variable": "removeOwnPosts",
+      "line": 16
+    },
+    {
+      "source": "src/feed/ranking/filters.ts",
+      "variable": "removeBlockedAndMuted",
+      "line": 20
+    },
+    {
+      "source": "src/feed/ranking/filters.ts",
+      "variable": "removeMutedKeywords",
+      "line": 26
+    },
+    {
+      "source": "src/feed/ranking/filters.ts",
+      "variable": "dropDuplicates",
+      "line": 33
+    },
+    {
+      "source": "src/feed/ranking/filters.ts",
+      "variable": "filterByAge",
+      "line": 47
+    },
+    {
+      "source": "src/forest/GearLoader.tsx",
+      "variable": "CIRC",
+      "line": 2
+    },
+    {
+      "source": "src/lockerfolio/App.tsx",
+      "variable": "heroChunk",
+      "line": 20
+    },
+    {
+      "source": "src/lockerfolio/App.tsx",
+      "variable": "HeroSceneCanvas",
+      "line": 21
+    },
+    {
+      "source": "src/lockerfolio/components/Reveal.tsx",
+      "variable": "CELL_COUNT",
+      "line": 8
+    },
+    {
+      "source": "src/lockerfolio/components/fallback/capabilities.ts",
+      "variable": "listeners",
+      "line": 121
+    },
+    {
+      "source": "src/lockerfolio/components/overlays/OverlayHost.tsx",
+      "variable": "AboutCard",
+      "line": 17
+    },
+    {
+      "source": "src/lockerfolio/components/overlays/OverlayHost.tsx",
+      "variable": "SkillsDeck",
+      "line": 18
+    },
+    {
+      "source": "src/lockerfolio/components/overlays/OverlayHost.tsx",
+      "variable": "WorkFolders",
+      "line": 19
+    },
+    {
+      "source": "src/lockerfolio/components/overlays/OverlayHost.tsx",
+      "variable": "ContactBoard",
+      "line": 20
+    },
+    {
+      "source": "src/lockerfolio/components/overlays/OverlayHost.tsx",
+      "variable": "BODIES",
+      "line": 22
+    },
+    {
+      "source": "src/lockerfolio/components/overlays/useDialog.ts",
+      "variable": "FOCUSABLE",
+      "line": 3
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "SX",
+      "line": 20
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "SY",
+      "line": 21
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "TW",
+      "line": 22
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "TH",
+      "line": 23
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "MARGIN_X",
+      "line": 34
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "MARGIN_Y",
+      "line": 35
+    },
+    {
+      "source": "src/lockerfolio/components/work/PhotographWall.tsx",
+      "variable": "mod",
+      "line": 81
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersDeck.tsx",
+      "variable": "LOOP",
+      "line": 16
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersDeck.tsx",
+      "variable": "TAU",
+      "line": 17
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersDeck.tsx",
+      "variable": "REST_OFFSET",
+      "line": 18
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "LOOP",
+      "line": 15
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "TAU",
+      "line": 16
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "REST_OFFSET",
+      "line": 17
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "INTRO_GATHER_AT",
+      "line": 25
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "INTRO_HOLD_AT",
+      "line": 26
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "INTRO_FADE_AT",
+      "line": 27
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "INTRO_UNFOLD_AT",
+      "line": 28
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "EASE_POWER3_OUT",
+      "line": 29
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "cardWidthFor",
+      "line": 45
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "clamp01",
+      "line": 48
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "mix",
+      "line": 49
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "wrap",
+      "line": 50
+    },
+    {
+      "source": "src/lockerfolio/components/work/PostersThreeScene.tsx",
+      "variable": "PostersThreeScene",
+      "line": 170
+    },
+    {
+      "source": "src/lockerfolio/components/work/frameLoop.ts",
+      "variable": "subs",
+      "line": 14
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "HERO_PROPS",
+      "line": 177
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "HERO_DECALS",
+      "line": 190
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "WORK_ASSETS",
+      "line": 353
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "ASSET_MANIFEST",
+      "line": 436
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "BLOCKING_ASSETS",
+      "line": 444
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "PRELOAD_ASSETS",
+      "line": 447
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "ASSETS_BY_ID",
+      "line": 449
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "VARIANT_WIDTHS",
+      "line": 462
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "ASSET_FILE_COUNT",
+      "line": 471
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "BLOCKING_BYTES",
+      "line": 476
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "runtimes",
+      "line": 531
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "listeners",
+      "line": 543
+    },
+    {
+      "source": "src/lockerfolio/experience/assetManifest.ts",
+      "variable": "snapshot",
+      "line": 548
+    },
+    {
+      "source": "src/lockerfolio/experience/experienceMachine.ts",
+      "variable": "CAPABILITIES",
+      "line": 137
+    },
+    {
+      "source": "src/lockerfolio/experience/experienceTimeline.ts",
+      "variable": "AUTOFOCUS_END",
+      "line": 61
+    },
+    {
+      "source": "src/lockerfolio/experience/experienceTimeline.ts",
+      "variable": "INTRO_EVENTS",
+      "line": 70
+    },
+    {
+      "source": "src/lockerfolio/experience/experienceTimeline.ts",
+      "variable": "INTRO_END",
+      "line": 78
+    },
+    {
+      "source": "src/lockerfolio/scene/CameraRig.tsx",
+      "variable": "_pos",
+      "line": 9
+    },
+    {
+      "source": "src/lockerfolio/scene/CameraRig.tsx",
+      "variable": "_tgt",
+      "line": 10
+    },
+    {
+      "source": "src/lockerfolio/scene/DecalField.tsx",
+      "variable": "_plane",
+      "line": 38
+    },
+    {
+      "source": "src/lockerfolio/scene/DecalField.tsx",
+      "variable": "_hitWorld",
+      "line": 39
+    },
+    {
+      "source": "src/lockerfolio/scene/DecalField.tsx",
+      "variable": "_normal",
+      "line": 40
+    },
+    {
+      "source": "src/lockerfolio/scene/DecalField.tsx",
+      "variable": "_origin",
+      "line": 41
+    },
+    {
+      "source": "src/lockerfolio/scene/DecalField.tsx",
+      "variable": "_local",
+      "line": 42
+    },
+    {
+      "source": "src/lockerfolio/scene/Hotspots.tsx",
+      "variable": "_v",
+      "line": 15
+    },
+    {
+      "source": "src/lockerfolio/scene/Hotspots.tsx",
+      "variable": "_normal",
+      "line": 16
+    },
+    {
+      "source": "src/lockerfolio/scene/LockerModel.tsx",
+      "variable": "HANDLE_CX",
+      "line": 262
+    },
+    {
+      "source": "src/lockerfolio/scene/LockerModel.tsx",
+      "variable": "HANDLE_CY",
+      "line": 263
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "Y_AXIS",
+      "line": 19
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "TYPEWRITER_KEYS",
+      "line": 482
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "ID_CARD_PX",
+      "line": 1070
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "ID_CARD_BEVEL",
+      "line": 1091
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "ID_CARD_CORNER",
+      "line": 1094
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "ID_CARD_BODY_RECT",
+      "line": 1120
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "ID_CARD_PRINT_RECT",
+      "line": 1121
+    },
+    {
+      "source": "src/lockerfolio/scene/PhysicalProps.tsx",
+      "variable": "ID_CARD_RING_RECT",
+      "line": 1122
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "_anchor",
+      "line": 46
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "BAY_MIN_X",
+      "line": 47
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "BAY_MAX_X",
+      "line": 48
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "SHELF_MAX_Z",
+      "line": 49
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "FIND_A_WORD_ROOT_Z",
+      "line": 50
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "FIND_A_WORD_FRONT_Z",
+      "line": 51
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "DOOR_FACE_BOUNDS",
+      "line": 59
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "FIND_A_WORD",
+      "line": 70
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "TURNTABLE",
+      "line": 71
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "SELECTED_WORK",
+      "line": 72
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "TYPEWRITER",
+      "line": 73
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "GUITAR",
+      "line": 74
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "TRAY_B",
+      "line": 98
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "ID_CARD",
+      "line": 113
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "DOOR4_PHOTO_BEACH",
+      "line": 135
+    },
+    {
+      "source": "src/lockerfolio/scene/Props.tsx",
+      "variable": "DOOR4_PHOTO_CAMERA",
+      "line": 142
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "BAY_MIN_X",
+      "line": 9
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "BAY_MAX_X",
+      "line": 10
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "SHELF_MIN_Z",
+      "line": 11
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "SHELF_MAX_Z",
+      "line": 12
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "slotXs",
+      "line": 20
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "SLOT_STEP",
+      "line": 21
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "slotIndexAt",
+      "line": 22
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "_plane",
+      "line": 28
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "_hit",
+      "line": 29
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "_quat",
+      "line": 30
+    },
+    {
+      "source": "src/lockerfolio/scene/ShelfBooks.tsx",
+      "variable": "_identity",
+      "line": 31
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "_plane",
+      "line": 19
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "_normalMatrix",
+      "line": 20
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "_normal",
+      "line": 21
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "_origin",
+      "line": 22
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "_hitWorld",
+      "line": 23
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "_hitLocal",
+      "line": 24
+    },
+    {
+      "source": "src/lockerfolio/scene/SurfaceDraggable.tsx",
+      "variable": "SurfaceDraggable",
+      "line": 94
+    },
+    {
+      "source": "src/lockerfolio/scene/ZoomControls.tsx",
+      "variable": "WHEEL_K",
+      "line": 18
+    },
+    {
+      "source": "src/lockerfolio/scene/cameraPath.ts",
+      "variable": "APPROACH_KEYS",
+      "line": 48
+    },
+    {
+      "source": "src/lockerfolio/scene/cameraPath.ts",
+      "variable": "WIDE_POSE",
+      "line": 60
+    },
+    {
+      "source": "src/lockerfolio/scene/cameraPath.ts",
+      "variable": "APPROACH_LAST",
+      "line": 63
+    },
+    {
+      "source": "src/lockerfolio/scene/cameraPath.ts",
+      "variable": "ABOUT_POSE",
+      "line": 89
+    },
+    {
+      "source": "src/lockerfolio/scene/decalSpecs.ts",
+      "variable": "DECAL_URLS",
+      "line": 278
+    },
+    {
+      "source": "src/lockerfolio/scene/doorMotion.ts",
+      "variable": "DOOR_OPEN_RAD",
+      "line": 36
+    },
+    {
+      "source": "src/lockerfolio/scene/doorMotion.ts",
+      "variable": "DOOR_PROFILE_MS",
+      "line": 39
+    },
+    {
+      "source": "src/lockerfolio/scene/hotspotActions.ts",
+      "variable": "registry",
+      "line": 38
+    },
+    {
+      "source": "src/lockerfolio/scene/hotspotActions.ts",
+      "variable": "movingAnchors",
+      "line": 48
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "BAY_PITCH",
+      "line": 31
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "OPENING_TOP",
+      "line": 42
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "OPENING_BOTTOM",
+      "line": 43
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "OPENING_H",
+      "line": 44
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "CAVITY_BACK_Z",
+      "line": 47
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "DOOR_HINGE_GAP",
+      "line": 60
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "DOOR_BOTTOM",
+      "line": 62
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "DOOR_FRONT_Z",
+      "line": 68
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "DOOR_CY",
+      "line": 70
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "VENT_H",
+      "line": 92
+    },
+    {
+      "source": "src/lockerfolio/scene/lockerSpec.ts",
+      "variable": "DOOR_PLANE_Z",
+      "line": 111
+    },
+    {
+      "source": "src/lockerfolio/scene/propSpecs.ts",
+      "variable": "EASES",
+      "line": 60
+    },
+    {
+      "source": "src/lockerfolio/scene/propSpecs.ts",
+      "variable": "CAVITY_PROPS",
+      "line": 104
+    },
+    {
+      "source": "src/lockerfolio/scene/sceneConfig.ts",
+      "variable": "LOCKER_W",
+      "line": 28
+    },
+    {
+      "source": "src/lockerfolio/scene/sceneConfig.ts",
+      "variable": "FRONT_Z",
+      "line": 41
+    },
+    {
+      "source": "src/lockerfolio/scene/sceneConfig.ts",
+      "variable": "BACK_Z",
+      "line": 43
+    },
+    {
+      "source": "src/lockerfolio/scene/sceneConfig.ts",
+      "variable": "BAY_X",
+      "line": 46
+    },
+    {
+      "source": "src/lockerfolio/scene/sceneConfig.ts",
+      "variable": "REFERENCE_ASPECT",
+      "line": 62
+    },
+    {
+      "source": "src/lockerfolio/scene/userZoom.ts",
+      "variable": "listeners",
+      "line": 43
+    },
+    {
+      "source": "src/lockerfolio/store.ts",
+      "variable": "useStore",
+      "line": 55
+    },
+    {
+      "source": "src/main.tsx",
+      "variable": "crash",
+      "line": 15
+    },
+    {
+      "source": "src/notesStore.ts",
+      "variable": "useNotes",
+      "line": 29
+    },
+    {
+      "source": "src/notificationData.ts",
+      "variable": "COMMENT_NOTIFS",
+      "line": 34
+    },
+    {
+      "source": "src/notificationData.ts",
+      "variable": "LIKE_NOTIFS",
+      "line": 54
+    },
+    {
+      "source": "src/notificationData.ts",
+      "variable": "FOLLOW_NOTIFS",
+      "line": 87
+    },
+    {
+      "source": "src/notificationData.ts",
+      "variable": "NOTIFS_BY_CATEGORY",
+      "line": 95
+    },
+    {
+      "source": "src/notificationStore.ts",
+      "variable": "useNotifications",
+      "line": 46
+    },
+    {
+      "source": "src/pages/AmosAIPage.tsx",
+      "variable": "greeting",
+      "line": 39
+    },
+    {
+      "source": "src/pages/NotificationPage.tsx",
+      "variable": "imgUrl",
+      "line": 23
+    },
+    {
+      "source": "src/pages/admin/AdminRouter.tsx",
+      "variable": "pathname",
+      "line": 10
+    },
+    {
+      "source": "src/pages/feed/lightboxData.ts",
+      "variable": "parseCount",
+      "line": 117
+    },
+    {
+      "source": "src/pages/feed/lightboxData.ts",
+      "variable": "fmtCount",
+      "line": 119
+    },
+    {
+      "source": "src/pages/messages/Composer.tsx",
+      "variable": "pickRandomPhoto",
+      "line": 28
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "imgUrl",
+      "line": 7
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "fmtDur",
+      "line": 10
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "fmtTime",
+      "line": 32
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "previewOf",
+      "line": 41
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "TrashIcon",
+      "line": 74
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "PinIcon",
+      "line": 83
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "BellOffIcon",
+      "line": 90
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "ArchiveIcon",
+      "line": 99
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "EraserIcon",
+      "line": 107
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "FlagIcon",
+      "line": 114
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "BlockIcon",
+      "line": 121
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "MicIcon",
+      "line": 128
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "NoteIcon",
+      "line": 136
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "SmileIcon",
+      "line": 144
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "ImageIcon",
+      "line": 153
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "MoreIcon",
+      "line": 161
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "UsersIcon",
+      "line": 169
+    },
+    {
+      "source": "src/pages/messages/parts.tsx",
+      "variable": "bgStyle",
+      "line": 628
+    },
+    {
+      "source": "src/podcastData.ts",
+      "variable": "V",
+      "line": 19
+    },
+    {
+      "source": "src/podcastData.ts",
+      "variable": "EPISODES",
+      "line": 21
+    },
+    {
+      "source": "src/profile/careerModals.tsx",
+      "variable": "years",
+      "line": 240
+    },
+    {
+      "source": "src/profile/careerModals.tsx",
+      "variable": "blankExperience",
+      "line": 247
+    },
+    {
+      "source": "src/profile/careerModals.tsx",
+      "variable": "blankEducation",
+      "line": 264
+    },
+    {
+      "source": "src/profile/careerModals.tsx",
+      "variable": "blankCertification",
+      "line": 277
+    },
+    {
+      "source": "src/profile/careerModals.tsx",
+      "variable": "blankVolunteer",
+      "line": 288
+    },
+    {
+      "source": "src/profile/careerModals.tsx",
+      "variable": "durLabel",
+      "line": 300
+    },
+    {
+      "source": "src/profileStore.ts",
+      "variable": "DEFAULT_PROFILE",
+      "line": 75
+    },
+    {
+      "source": "src/profileStore.ts",
+      "variable": "useProfile",
+      "line": 123
+    },
+    {
+      "source": "src/repositories/localStore.ts",
+      "variable": "storage",
+      "line": 41
+    },
+    {
+      "source": "src/stores/community/catalogSlice.ts",
+      "variable": "catalogSlice",
+      "line": 15
+    },
+    {
+      "source": "src/stores/community/groupsSlice.ts",
+      "variable": "groupsSlice",
+      "line": 46
+    },
+    {
+      "source": "src/stores/community/helpers.ts",
+      "variable": "appendMessage",
+      "line": 14
+    },
+    {
+      "source": "src/stores/community/helpers.ts",
+      "variable": "syncAnnouncements",
+      "line": 23
+    },
+    {
+      "source": "src/stores/community/messagesSlice.ts",
+      "variable": "messagesSlice",
+      "line": 46
+    },
+    {
+      "source": "src/stores/community/persist.ts",
+      "variable": "communityPersist",
+      "line": 39
+    },
+    {
+      "source": "src/stores/community/types.ts",
+      "variable": "toggleIn",
+      "line": 137
+    },
+    {
+      "source": "src/teacher/ui.tsx",
+      "variable": "Ico",
+      "line": 6
+    },
+    {
+      "source": "src/teacher/ui.tsx",
+      "variable": "textareaCls",
+      "line": 129
+    },
+    {
+      "source": "src/teacher/ui.tsx",
+      "variable": "selectCls",
+      "line": 130
+    },
+    {
+      "source": "src/teacherStore.ts",
+      "variable": "DEFAULT_LESSONS",
+      "line": 128
+    },
+    {
+      "source": "src/teacherStore.ts",
+      "variable": "DEFAULT_ORDERS",
+      "line": 191
+    },
+    {
+      "source": "src/teacherStore.ts",
+      "variable": "useTeacher",
+      "line": 218
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "SearchIcon",
+      "line": 55
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "MenuIcon",
+      "line": 63
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "CloseIcon",
+      "line": 72
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "ChevronDownIcon",
+      "line": 80
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "ArrowRightIcon",
+      "line": 82
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "PlayIcon",
+      "line": 90
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "GlobeIcon",
+      "line": 104
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "FacebookIcon",
+      "line": 113
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "InstagramIcon",
+      "line": 127
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "XIcon",
+      "line": 145
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "LinkedInIcon",
+      "line": 159
+    },
+    {
+      "source": "src/tedclone/icons.tsx",
+      "variable": "YouTubeIcon",
+      "line": 173
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "BLANK_POSTER",
+      "line": 11
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "emptyTalk",
+      "line": 17
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "discoverTalks",
+      "line": 84
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "popularTalks",
+      "line": 159
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "newestTalks",
+      "line": 160
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "popularOnTedTalks",
+      "line": 161
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "countdownTalks",
+      "line": 162
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "podcastTalks",
+      "line": 163
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "trendingCategories",
+      "line": 165
+    },
+    {
+      "source": "src/tedclone/ted-data.ts",
+      "variable": "newsletters",
+      "line": 189
+    }
+  ]
+}

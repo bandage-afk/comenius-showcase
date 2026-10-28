@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+# main 只接受 PR 合并 —— 这条在本地拦一次（免费方案 C 的第一道）。
+#
+# 为什么不靠 GitHub 规则：私有仓库 + 个人账号下 rulesets / 分支保护不生效
+# （要 GitHub Team 才行，见 docs/REPO-SETUP.md §2），所以只能"本地钩子 + CI 自查"。
+#
+# 读的是"这次实际要推上去的远程 ref"，所以在分支上执行 `git push origin main` 同样会被拦住。
+# 万不得已要绕过：git push --no-verify
+
+blocked=""
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main) blocked="yes" ;;
+  esac
+done
+
+if [ -n "$blocked" ]; then
+  echo "✋ 直接推 main 被本地钩子拦下（协作规范：main 只接受 PR 合并）"
+  echo "   推分支：git push -u origin HEAD"
+  echo "   确要绕过：git push --no-verify"
+  exit 1
+fi
+
+exit 0

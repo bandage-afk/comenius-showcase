@@ -1,0 +1,56 @@
+name: 线上健康检查
+
+# 每小时探活一次；失败时 GitHub 会给仓库所有者发邮件
+# 也可在 Actions 页面手动触发
+#
+# ⚠️ 为什么不是每 15 分钟：私有仓库在免费版每月只有 2000 分钟 Actions 额度，
+# 而每次运行**至少按 1 分钟计费**。每 15 分钟 = 一天 96 次 ≈ 96 分钟，
+# 一个月约 2880 分钟 —— 光监控就会吃光额度，把 PR 的 CI 挤掉（CI 一次约 4.5 分钟）。
+# 每小时 = 一个月约 720 分钟，留足 CI 空间。
+# 想要"分钟级"的发现速度，用免费外部监控（UptimeRobot / BetterStack），别用 Actions 定时任务。
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    name: 探活 · 证书到期
+    runs-on: ubuntu-latest
+    steps:
+      - name: 生产 / staging 探活
+        run: |
+          fail=0
+          for url in \
+            https://www.comenius.cn:8443/community/ \
+            https://www.comenius.cn:8443/staging/
+          do
+            code=$(curl -sSk -o /dev/null -w '%{http_code}' --max-time 20 "$url" || echo 000)
+            echo "$url -> $code"
+            if [ "$code" != "200" ]; then
+              echo "::error::$url 返回 $code"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: 首页标题包含站点名
+        run: |
+          title=$(curl -sSk --max-time 20 https://www.comenius.cn:8443/community/ | grep -o '<title>[^<]*</title>' || true)
+          echo "title: $title"
+          case "$title" in
+            *Comenius*) echo "OK" ;;
+            *) echo "::error::首页标题异常（可能是白屏或配置被改）：$title"; exit 1 ;;
+          esac
+
+      - name: HTTPS 证书到期检查（少于 14 天报警）
+        run: |
+          end=$(echo | openssl s_client -servername www.comenius.cn -connect www.comenius.cn:8443 2>/dev/null \
+                | openssl x509 -noout -enddate | cut -d= -f2)
+          echo "证书到期时间: $end"
+          days=$(( ( $(date -d "$end" +%s) - $(date +%s) ) / 86400 ))
+          echo "剩余天数: $days"
+          if [ "$days" -lt 14 ]; then
+            echo "::error::证书将在 $days 天后过期，请续期（certbot renew）"
+            exit 1
+          fi

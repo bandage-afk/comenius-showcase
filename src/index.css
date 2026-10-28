@@ -1,0 +1,304 @@
+/* ── 字体：全部自托管，零境外依赖 ──────────────────────────────────────
+   拉丁：@fontsource 包（Vite 会把 woff2 一起打包、按内容哈希命名）
+   中文：Google 的切片已下载到 src/assets/fonts/cjk/，声明见 ./styles/fonts-cjk.css
+        （可变字体，一片覆盖 300–900 全字重；按 unicode-range 分片，浏览器只取用到的）
+   ⚠️ 不要再往这里写 `@import url(fonts.googleapis.com…)`，也不要在 index.html 挂境外字体：
+      CSS @import 会卡住整份样式解析，国内表现为首屏白等超时。
+      改字重/字体：拉丁改下面这组 import，中文重跑 scripts/fonts/fetch-cjk-fonts.mjs。 */
+@import '@fontsource/ultra/latin-400.css';
+@import '@fontsource/archivo-black/latin-400.css';
+@import '@fontsource/alfa-slab-one/latin-400.css';
+@import '@fontsource/inter/latin-300.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/lora/latin-400.css';
+@import '@fontsource/lora/latin-500.css';
+@import '@fontsource/lora/latin-600.css';
+@import '@fontsource/lora/latin-700.css';
+@import '@fontsource/lora/latin-400-italic.css';
+@import '@fontsource/lora/latin-600-italic.css';
+@import '@fontsource/courier-prime/latin-400.css';
+@import '@fontsource/courier-prime/latin-700.css';
+@import '@fontsource/courier-prime/latin-400-italic.css';
+@import '@fontsource/noto-sans/latin-400.css';
+@import '@fontsource/noto-sans/latin-500.css';
+@import '@fontsource/noto-sans/latin-600.css';
+@import '@fontsource/east-sea-dokdo/latin-400.css';
+@import '@fontsource-variable/playfair-display/wght.css';
+@import '@fontsource-variable/playfair-display/wght-italic.css';
+@import '@fontsource-variable/bodoni-moda/standard.css';
+@import '@fontsource-variable/bodoni-moda/standard-italic.css';
+@import './styles/fonts-cjk.css';
+@import 'tailwindcss';
+
+/* ── 设计 token（全站唯一取值来源，改这里就改全站）────────────────────────────
+   注意：Tailwind v4 会 tree-shake 掉「没有被工具类引用」的 @theme 变量，
+   所以原始值必须定义在 :root（一定输出），@theme 只做映射：
+     · 内联样式：style={{ color: 'var(--brand)' }}
+     · Tailwind：text-brand / bg-surface（映射见下方 @theme inline）
+   约定：新增颜色先在这里加 token，不要再在页面里写十六进制。                  */
+:root {
+  /* 教师工作台：保留移植界面的原始色值，统一由 token 管理。 */
+  --teacher-muted: #6f6f77;
+  --teacher-border-strong: #e0e0e4;
+  --teacher-input-border: #e7e7e7;
+  --teacher-border: #efeff1;
+  --teacher-surface: #fafafb;
+  --teacher-selected-border: #ffd4da;
+  --teacher-brand-soft: #ffe3e8;
+  --teacher-timeline: #f0d6db;
+  --teacher-success: #0fbf6f;
+  --teacher-success-soft: #eafbf0;
+  --teacher-info: #3b82f6;
+  --teacher-info-soft: #eff4ff;
+  --teacher-warning: #d97706;
+  --teacher-warning-soft: #fff7eb;
+  --teacher-gradient-start: #4a7dff;
+  --teacher-gradient-end: #7c3aed;
+  --teacher-shadow: rgba(0, 0, 0, 0.3);
+  --teacher-white-12: rgba(255, 255, 255, 0.12);
+  --teacher-white-18: rgba(255, 255, 255, 0.18);
+  --teacher-white-20: rgba(255, 255, 255, 0.2);
+  --teacher-white-60: rgba(255, 255, 255, 0.6);
+  --teacher-white-92: rgba(255, 255, 255, 0.92);
+
+  /* 品牌色 */
+  --brand: #ff2442; /* 主品牌红（社区 / 消息 / 发布） */
+  --brand-hover: #e51f3a;
+
+  /* 中性色 · 文字 */
+  --ink-strong: #111111;
+  --ink: #191919;
+  --ink-soft: #1f1f1f;
+  --text: #222222;
+  --text-muted: #666666;
+  --text-subtle: #999999;
+
+  /* 中性色 · 面与描边 */
+  --surface: #ffffff;
+  --surface-sunken: #f5f5f5;
+
+  /* 教师模块（领英版式）独立色系 */
+  --linkedin: #0a66c2;
+  --linkedin-border: #e0dfdc;
+  --linkedin-bg: #f3f2ef;
+
+  /* 语义色 */
+  --danger: #ff2442;
+  --success: #2e9e63;
+  --warning: #b7791f;
+
+  /* 灰阶（2026-09-24 收敛第一批）：这些值来自 Figma 里散落的内联十六进制，
+     数值**一个没改**，只是给了名字 —— 视觉零差异，但从此改一处就能动全站。
+     命名按亮度：数字越大越深。仍有一批长尾色值冻结在 token 基线里（见 docs/TECH-DEBT.md §6）。
+     ⚠️ 想把这么多级灰**归并成 6 级**属于设计决策（要逐页看观感），别顺手做。 */
+  --grey-900: #333333;
+  --grey-800: #555555;
+  --grey-600: #8a8a8a;
+  --grey-500: #9a9a9a;
+  --grey-450: #aaaaaa;
+  --grey-400: #b5b5b5;
+  --grey-350: #bbbbbb;
+  --grey-300: #c4c4c4;
+  --grey-250: #cccccc;
+  --grey-200: #e0e0e0;
+  --grey-150: #e8e8e8;
+  --grey-100: #efefef;
+  --grey-75: #f0f0f0;
+  --grey-50: #f2f2f2;
+  --grey-25: #fafafa;
+  --grey-15: #f5f5f6;
+  --grey-warm: #c8c6c3;
+
+  /* 品牌相关的补充色（同样是精确值收敛） */
+  --brand-tint: #fff0f2;
+  --linkedin-dark: #004182;
+
+  /* TED / 长文模块色板
+     这些值以前直接写在 @theme inline 里 —— Tailwind v4 会 tree-shake 掉
+     「没被工具类引用」的 @theme 变量，一旦有人写 var(--gray-1) 就会静默变透明。
+     所以原始值和其它 token 一样放 :root，@theme 只做映射（门禁 pnpm tokens 会拦）。 */
+  --ted-red: #eb0028;
+  --ted-red-hover: #d91e18;
+  --pure-black: #000000;
+  --gray-1: #f6f6f6;
+  --gray-2: #ececec;
+  --text-dark: #262626;
+  --text-secondary: #494949;
+  --text-tertiary: #696969;
+
+  /* Podcast 页（经济学人版式的深色播客界面）
+     保留移植界面的原始色值，和 --teacher-* 一样统一由 token 管理：
+     页面样式写在 src/styles/podcast.css，那里只许出现 var(--pc-*)，禁止颜色字面量。 */
+  --pc-bg: #0a0c11;
+  --pc-surface: #12151c;
+  --pc-surface-input: #13161d;
+  --pc-surface-chip-hover: #1a1d25;
+  --pc-surface-btn: #1c2029;
+  --pc-panel-bg: rgba(18, 21, 28, 0.94);
+  --pc-topbar-bg: rgba(10, 12, 17, 0.9);
+  --pc-hover: #272727;
+  --pc-hover-panel: #242832;
+  --pc-thumb-bg: #252525;
+  --pc-avatar-bg: #262626;
+  --pc-cream: #f2eee6;
+  --pc-on-cream: #191919;
+  --pc-on-cream-line: #1c1c1c;
+  --pc-red: #e3120b;
+  --pc-red-hover: #fb2922;
+  --pc-red-26: rgba(227, 18, 11, 0.26);
+  --pc-red-09: rgba(227, 18, 11, 0.09);
+  --pc-red-08: rgba(227, 18, 11, 0.08);
+  --pc-red-05: rgba(227, 18, 11, 0.05);
+  --pc-avatar-purple: #4b2ca6;
+  --pc-av-1: #5e2a84;
+  --pc-av-2: #2365a8;
+  --pc-av-3: #c14f43;
+  --pc-av-4: #32745d;
+  --pc-av-5: #b07b22;
+  --pc-av-6: #7b3d68;
+  --pc-focus: #1c62b9;
+  --pc-text: #f1f1f1;
+  --pc-text-strong: #ffffff;
+  --pc-text-muted: #aaaaaa;
+  --pc-text-body: #aaadb5;
+  --pc-text-chip: #b8bbc2;
+  --pc-text-dim: #bbbbbb;
+  --pc-text-subtle: #737781;
+  --pc-text-faint: #8f8f8f;
+  --pc-placeholder: #888888;
+  --pc-border-card: #242832;
+  --pc-border-panel: #262a34;
+  --pc-border-hero: #282c36;
+  --pc-border-divider: #2a2e38;
+  --pc-border-soft: #303030;
+  --pc-border-chip: #30343e;
+  --pc-border-input: #363944;
+  --pc-border-avatar: #3a3a3a;
+  --pc-border-card-hover: #3a3f4b;
+  --pc-border-chip-hover: #5a5e69;
+  --pc-hairline: rgba(255, 255, 255, 0.07);
+  --pc-white-025: rgba(255, 255, 255, 0.025);
+  --pc-scrim-top: rgba(0, 0, 0, 0.16);
+  --pc-scrim-bottom: rgba(0, 0, 0, 0.15);
+  --pc-label-bg: rgba(0, 0, 0, 0.78);
+  --pc-shadow-panel: rgba(0, 0, 0, 0.22);
+  --pc-shadow-panel-mobile: rgba(0, 0, 0, 0.4);
+}
+
+@theme inline {
+  --color-teacher-muted: var(--teacher-muted);
+  --color-teacher-border-strong: var(--teacher-border-strong);
+  --color-teacher-input-border: var(--teacher-input-border);
+  --color-teacher-border: var(--teacher-border);
+  --color-teacher-surface: var(--teacher-surface);
+  --color-teacher-selected-border: var(--teacher-selected-border);
+  --color-teacher-brand-soft: var(--teacher-brand-soft);
+  --color-teacher-timeline: var(--teacher-timeline);
+  --color-teacher-success: var(--teacher-success);
+  --color-teacher-success-soft: var(--teacher-success-soft);
+  --color-teacher-info: var(--teacher-info);
+  --color-teacher-info-soft: var(--teacher-info-soft);
+  --color-teacher-warning: var(--teacher-warning);
+  --color-teacher-warning-soft: var(--teacher-warning-soft);
+  --color-teacher-gradient-start: var(--teacher-gradient-start);
+  --color-teacher-gradient-end: var(--teacher-gradient-end);
+  --color-teacher-shadow: var(--teacher-shadow);
+  --color-teacher-white-12: var(--teacher-white-12);
+  --color-teacher-white-18: var(--teacher-white-18);
+  --color-teacher-white-20: var(--teacher-white-20);
+  --color-teacher-white-60: var(--teacher-white-60);
+  --color-teacher-white-92: var(--teacher-white-92);
+
+  /* 设计 token → Tailwind 工具类映射（text-brand / bg-surface / border-linkedin …） */
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-ink-strong: var(--ink-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-linkedin: var(--linkedin);
+  --color-linkedin-border: var(--linkedin-border);
+  --color-linkedin-bg: var(--linkedin-bg);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  /* 灰阶与品牌补充色 → Tailwind 工具类映射（text-grey-600 / bg-grey-25 …） */
+  --color-grey-900: var(--grey-900);
+  --color-grey-800: var(--grey-800);
+  --color-grey-600: var(--grey-600);
+  --color-grey-500: var(--grey-500);
+  --color-grey-450: var(--grey-450);
+  --color-grey-400: var(--grey-400);
+  --color-grey-350: var(--grey-350);
+  --color-grey-300: var(--grey-300);
+  --color-grey-250: var(--grey-250);
+  --color-grey-200: var(--grey-200);
+  --color-grey-150: var(--grey-150);
+  --color-grey-100: var(--grey-100);
+  --color-grey-75: var(--grey-75);
+  --color-grey-50: var(--grey-50);
+  --color-grey-25: var(--grey-25);
+  --color-grey-15: var(--grey-15);
+  --color-grey-warm: var(--grey-warm);
+  --color-brand-tint: var(--brand-tint);
+  --color-linkedin-dark: var(--linkedin-dark);
+
+  --color-ted-red: var(--ted-red);
+  --color-ted-red-hover: var(--ted-red-hover);
+  --color-pure-black: var(--pure-black);
+  --color-gray-1: var(--gray-1);
+  --color-gray-2: var(--gray-2);
+  --color-text-dark: var(--text-dark);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+}
+
+body {
+  font-family: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  background-color: #f2f2f2;
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #e8e8e8;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}

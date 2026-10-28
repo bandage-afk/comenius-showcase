@@ -1,0 +1,100 @@
+name: 自动部署 staging
+
+# main 分支有新提交时，自动把构建产物发到 staging（/staging/），供验收后再手动发生产
+# 需要仓库 Secret：DEPLOY_SSH_KEY（部署私钥内容）。没配这个 Secret 时本工作流自动跳过。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: 构建 → 发 staging
+    runs-on: ubuntu-latest
+    # ⚠️ 这里**不能**写 `if: secrets.DEPLOY_SSH_KEY != ''`：
+    # jobs.<id>.if 的可用上下文只有 github / needs / vars / inputs，不含 secrets ——
+    # 写了会让整个 workflow 文件变成 "Invalid workflow file"，一次都不会执行
+    # （2026-09-22 ~ 09-23 的 25 次失败就是这么来的：文件非法，GitHub 直接拒跑）。
+    # 所以改成"第一个步骤里判断 + 后续步骤加 if"。
+    steps:
+      - name: 检查部署密钥是否已配置
+        id: guard
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          if [ -z "${DEPLOY_KEY}" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=跳过自动发 staging::仓库没有配置 DEPLOY_SSH_KEY（Settings → Secrets and variables → Actions → Repository secrets），本次跳过。手动发：./deploy.sh staging"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v7
+        if: steps.guard.outputs.ready == 'true'
+      - uses: pnpm/action-setup@v6
+        if: steps.guard.outputs.ready == 'true'
+        with:
+          version: 10
+      - uses: actions/setup-node@v7
+        if: steps.guard.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.guard.outputs.ready == 'true'
+
+      - name: 校验并配置部署密钥（自诊断）
+        if: steps.guard.outputs.ready == 'true'
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          # 本机验证可用的那把密钥指纹（fingerprint 不是机密，可以入库）
+          EXPECTED_FP: SHA256:nypw9pRrevJeIi1FvpJozu8P4/2Pr1fH+QEWjEuSYro
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+
+          if [ -z "${DEPLOY_KEY}" ]; then
+            echo "::error::取不到 Secret DEPLOY_SSH_KEY —— 确认它建在 Settings → Secrets and variables → Actions 的 Repository secrets（不是 Environment / Dependabot）"
+            exit 1
+          fi
+
+          # 去掉 Windows 换行、补上结尾换行：粘密钥时最常见的两种坏法
+          printf '%s\n' "${DEPLOY_KEY}" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          if ! head -1 ~/.ssh/deploy_key | grep -q 'BEGIN .*PRIVATE KEY'; then
+            echo "::error::DEPLOY_SSH_KEY 的内容不是私钥（第一行是：$(head -1 ~/.ssh/deploy_key | cut -c1-40)）——常见原因是粘成了 .pub 公钥或者粘错文件"
+            exit 1
+          fi
+
+          echo "密钥指纹：$(ssh-keygen -l -f ~/.ssh/deploy_key)"
+          echo "对应公钥（安全，可与服务器 authorized_keys 对照）：$(ssh-keygen -y -f ~/.ssh/deploy_key | cut -c1-64)…"
+          if ! ssh-keygen -l -f ~/.ssh/deploy_key | grep -q "${EXPECTED_FP}"; then
+            echo "::warning::指纹与本机验证可用那把（${EXPECTED_FP}）不一致——若部署失败，先怀疑密钥粘错了"
+          fi
+
+          ssh-keyscan -p 22 YOUR_SERVER_IP >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          if ssh -i ~/.ssh/deploy_key -o BatchMode=yes -o ConnectTimeout=15 \
+               -o StrictHostKeyChecking=accept-new root@YOUR_SERVER_IP 'echo SSH_OK'; then
+            echo "✅ SSH 免密握手成功"
+          else
+            echo "::error::SSH 握手失败——服务器不接受这把密钥（检查服务器 ~/.ssh/authorized_keys；下面 25 行是原因）"
+            ssh -vv -i ~/.ssh/deploy_key -o BatchMode=yes -o ConnectTimeout=15 \
+              -o StrictHostKeyChecking=accept-new root@YOUR_SERVER_IP 'echo retry' 2>&1 | tail -25 || true
+            exit 1
+          fi
+
+      - name: 构建并发到 staging
+        if: steps.guard.outputs.ready == 'true'
+        run: ./deploy.sh staging
+        env:
+          SSH_KEY: ~/.ssh/deploy_key
+
+      - name: 冒烟验证 staging
+        if: steps.guard.outputs.ready == 'true'
+        run: |
+          pnpm add -D playwright
+          npx playwright install --with-deps chromium
+          SMOKE_BASE=https://www.comenius.cn:8443/staging/ node scripts/smoke.mjs

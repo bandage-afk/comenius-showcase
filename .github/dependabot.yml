@@ -1,0 +1,40 @@
+# 依赖更新：让 GitHub 自己开 PR，而不是等谁想起来手动升级。
+#
+# 为什么需要：这个项目没有后端、依赖也不多，但**没人盯**就会攒成"不敢升"（比如 vite 的
+# 大版本、three 的破坏性升级）。有了它，补丁/次版本每周自动来一个 PR，CI 直接验。
+#
+# 注意：pnpm audit 在国内镜像（npmmirror）上没有端点，所以 CI 里跑 audit 要显式指定官方
+# registry（见 .github/workflows/ci.yml），而 Dependabot 由 GitHub 侧直连，不受影响。
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(deps)'
+    groups:
+      # 补丁 / 次版本合成一个 PR，别刷屏；大版本仍单独来，方便逐个评估
+      minor-and-patch:
+        applies-to: version-updates
+        update-types: ['minor', 'patch']
+    ignore:
+      # 这几个升级会牵动观感或构建链，人工排期（别让 Dependabot 直接开 PR 徒增噪音）
+      - dependency-name: three
+      - dependency-name: '@types/three'
+      - dependency-name: '@react-three/fiber'
+      - dependency-name: '@react-three/drei'
+      - dependency-name: '@react-three/postprocessing'
+      - dependency-name: '@react-three/rapier'
+      - dependency-name: '@imgly/background-removal'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: 'ci(deps)'

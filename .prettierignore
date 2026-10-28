@@ -1,0 +1,14 @@
+node_modules
+dist
+coverage
+pnpm-lock.yaml
+.figma
+public/models
+public/assets
+public/stickers
+*.tar.gz
+*.zip
+
+# 生成物：字体 @font-face 由 scripts/fonts/fetch-cjk-fonts.mjs 生成（不要手改）
+src/styles/fonts-cjk.css
+src/assets/fonts
